@@ -13,4 +13,8 @@ import java.time.format.DateTimeFormatter
 implicit val dateTimeQueryParamDecoder : QueryParamDecoder[Instant] =
   QueryParamDecoder[String].map(Instant.parse(_))
 
+/** Extracts intstant from query patameters.
+ * 
+ * @param name paremeter name
+ */
 class InstantQueryParamMatcher(name : String) extends QueryParamDecoderMatcher[Instant](name = name)

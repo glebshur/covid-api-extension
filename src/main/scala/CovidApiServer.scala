@@ -18,8 +18,14 @@ import com.comcast.ip4s.*
 import org.http4s.ember.server.*
 import shgo.innowise.trainee.covidapi.controller.*
 
+/** Main server class. */
 object CovidApiServer extends IOApp {
 
+  /** Gets all routes.
+   * 
+   * @tparam F effectful operation
+   * @return   all api routes
+   */
   def allRoutes[F[_] : Monad] : HttpApp[F] =
     (CountryController.countryRoutes[F] <+> StatisticController.countryStatisticRoutes[F])
       .orNotFound

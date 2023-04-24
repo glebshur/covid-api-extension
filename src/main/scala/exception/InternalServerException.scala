@@ -1,7 +1,7 @@
 package shgo.innowise.trainee.covidapi
 package exception
 
-/** Exception caused by server errors
+/** Exception caused by server errors.
  * 
  * @param message exception description
  */

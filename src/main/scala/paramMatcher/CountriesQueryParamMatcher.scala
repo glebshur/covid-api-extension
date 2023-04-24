@@ -10,4 +10,5 @@ import org.http4s.server.*
 implicit val countriesQueryParamDecoder: QueryParamDecoder[List[String]] =
   QueryParamDecoder[String].map(countries => countries.split(",").toList)
 
+/** Extracts country names from query parameters. */
 object CountriesQueryParamMatcher extends QueryParamDecoderMatcher[List[String]]("countries")

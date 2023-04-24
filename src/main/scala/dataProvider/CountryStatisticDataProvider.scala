@@ -11,6 +11,7 @@ import entity.CountryStatistic
 
 import shgo.innowise.trainee.covidapi.exception.BadRequestException
 
+/** Provides countries statistic from covid API. */
 object CountryStatisticDataProvider :
 
   implicit val countryDecoder: Decoder[CountryStatistic] = countryStatCursor =>
@@ -20,6 +21,13 @@ object CountryStatisticDataProvider :
       date <- countryStatCursor.get[String]("Date")
     } yield CountryStatistic(country, confermed, Instant.parse(date))
 
+  /** Gets country statistic for specified period of time.
+   * 
+   * @param country country name
+   * @param from    start interval
+   * @param to      end interval
+   * @return        list of country statistics
+   */
   def getCountryStatistic(country : String,
                           from : Instant,
                           to : Instant): List[CountryStatistic] =

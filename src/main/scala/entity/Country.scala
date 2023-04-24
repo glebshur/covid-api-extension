@@ -1,4 +1,9 @@
 package shgo.innowise.trainee.covidapi
 package entity
 
-case class Country (val country : String, val slug : String)
+/** Represents covid API country.
+ *
+ * @param country country name
+ * @param code    country name to use by request creating
+ */
+case class Country (val country : String, val code : String)

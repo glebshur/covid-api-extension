@@ -10,6 +10,7 @@ import io.circe.*
 import shgo.innowise.trainee.covidapi.entity.*
 import shgo.innowise.trainee.covidapi.exception.InternalServerException
 
+/** Provides data of countries that are allowd in covid API. */
 object CountryDataProvider :
 
   implicit val countryDecoder: Decoder[Country] = countryCursor =>
@@ -18,6 +19,10 @@ object CountryDataProvider :
       slug <- countryCursor.get[String]("Slug")
     } yield Country(country, slug)
 
+  /** Gets countries allowed in covid API.
+   *
+   * @return list of countries
+   */
   def getCountries : List[Country] =
     val uri = ClientProvider.basicUri.addPath("countries")
     val request = basicRequest
