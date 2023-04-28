@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background: rgb(221, 149, 14)">
+    <h2 class="navbar-brand">COVID API EXTENSION</h2>
+</nav>
+
+<div class="container">
+    <form class="p-3" [formGroup]="form" (ngSubmit)="submit()">
+        <div class="row">
+            <div class="col-md">
+                <label class="row" for="countrySelect">Countries</label>
+                <select *ngIf = "countries$ | async as countries" id="countrySelect" 
+                class="row form-select" multiple size="5" formControlName="selectedCountries">
+                    <option *ngFor="let country of countries" value="{{country.code}}">{{country.country}}</option>
+                </select>
+                <div *ngIf="form.get('selectedCountries')?.touched && form.get('selectedCountries')?.invalid">
+                    <small *ngIf="form.get('selectedCountries')?.errors?.required">Choose countries</small>
+                </div>
+            </div>
+            <div class="col-md">
+                <label for="fromDate">From</label>
+                <input id="fromDate" placeholder="yyyy-mm-dd" type="datetime-local" class="form-control"
+                formControlName="fromDate"/>
+                <div *ngIf="form.get('fromDate')?.touched && form.get('fromDate')?.invalid">
+                    <small *ngIf="form.get('fromDate')?.errors?.required">Choose from date</small>
+                </div>
+
+                <label for="toDate">To</label>
+                <input id="toDate" placeholder="yyyy-mm-dd" type="datetime-local" class="form-control"
+                formControlName="toDate"/>
+                <div *ngIf="form.get('toDate')?.touched && form.get('toDate')?.invalid">
+                    <small *ngIf="form.get('toDate')?.errors?.required">Choose from date</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-2 row">
+            <button type="submit" class="btn btn-warning col-md-6 mx-auto">Find</button>
+        </div>
+    </form>
+</div>
