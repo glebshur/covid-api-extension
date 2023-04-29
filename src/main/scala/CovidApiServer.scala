@@ -2,20 +2,23 @@ package shgo.innowise.trainee.covidapi
 
 
 
-import cats._
-import cats.effect._
-import cats.implicits._
-import org.http4s.circe._
-import org.http4s._
-import io.circe.generic.auto._
-import io.circe.syntax._
-import org.http4s.dsl._
-import org.http4s.dsl.impl._
-import org.http4s.headers._
-import org.http4s.implicits._
-import org.http4s.server._
+import cats.*
+import cats.effect.*
+import cats.implicits.*
+import org.http4s.circe.*
+import org.http4s.*
+import io.circe.generic.auto.*
+import io.circe.syntax.*
+import org.http4s.dsl.*
+import org.http4s.dsl.impl.*
+import org.http4s.headers.*
+import org.http4s.implicits.*
+import org.http4s.server.*
+import org.http4s.dsl.io.*
+import org.http4s.implicits.*
 import com.comcast.ip4s.*
 import org.http4s.ember.server.*
+import org.http4s.server.middleware.CORS
 import shgo.innowise.trainee.covidapi.controller.*
 
 /** Main server class. */
@@ -27,7 +30,8 @@ object CovidApiServer extends IOApp {
    * @return   all api routes
    */
   def allRoutes[F[_] : Monad] : HttpApp[F] =
-    (CountryController.countryRoutes[F] <+> StatisticController.countryStatisticRoutes[F])
+    CORS.policy.withAllowOriginAll(
+    (CountryController.countryRoutes[F] <+> StatisticController.countryStatisticRoutes[F]))
       .orNotFound
 
 

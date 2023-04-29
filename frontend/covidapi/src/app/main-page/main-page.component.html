@@ -1,0 +1,63 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background: rgb(221, 149, 14)">
+    <h2 class="navbar-brand">COVID API EXTENSION</h2>
+</nav>
+
+<div class="container">
+    <form class="pt-3" [formGroup]="form" (ngSubmit)="submit()">
+        <div class="row">
+            <div class="col-md">
+                <label class="row" for="countrySelect">Countries</label>
+                <select *ngIf = "countries$ | async as countries" id="countrySelect" 
+                class="row form-select" multiple size="5" formControlName="selectedCountries">
+                    <option *ngFor="let country of countries" value="{{country.code}}">{{country.country}}</option>
+                </select>
+                <div *ngIf="form.get('selectedCountries')?.touched && form.get('selectedCountries')?.invalid" class="alert alert-danger">
+                    <small *ngIf="form.get('selectedCountries')?.errors?.required">Choose countries</small>
+                </div>
+            </div>
+            <div class="col-md">
+                <label for="fromDate">From</label>
+                <input id="fromDate" type="datetime-local" class="form-control"
+                formControlName="fromDate"/>
+                <div *ngIf="form.get('fromDate')?.touched && form.get('fromDate')?.invalid" class="alert alert-danger">
+                    <small *ngIf="form.get('fromDate')?.errors?.required">Choose from date</small>
+                </div>
+
+                <label for="toDate">To</label>
+                <input id="toDate" type="datetime-local" class="form-control"
+                formControlName="toDate"/>
+                <div *ngIf="form.get('toDate')?.touched && form.get('toDate')?.invalid" class="alert alert-danger">
+                    <small *ngIf="form.get('toDate')?.errors?.required">Choose to date</small>
+                </div>
+
+                <div *ngIf="form.errors?.['periodInvalid'] && (form.touched || form.dirty)" class="cross-validation-error-message alert alert-danger">
+                    <small>To must be greater than from</small>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="form.errors?.['badRequest'] && (form.touched || form.dirty)" class="row alert alert-danger">
+            <div class="text-center">Cannot find statistics for choosen countries</div>
+        </div>
+
+        <div class="pt-2 row">
+            <button type="submit" class="btn btn-warning btn-block col-md-6 mx-auto"
+            [disabled]="form.invalid || submitted">Find</button>
+        </div>
+    </form>
+
+    <h2 class="pt-3 text-center">Countries statistic per day</h2>
+    <table class="table table-striped">
+        <thead>
+            <th>Country</th>
+            <th>Min Confermed</th>
+            <th>Max Confermed</th>
+        </thead>
+        <tbody *ngIf = "statistics">
+            <tr *ngFor="let statistic of statistics">
+                <td>{{statistic.country}}</td>
+                <td>{{statistic.minConfirmed}}</td>
+                <td>{{statistic.maxConfirmed}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
