@@ -14,5 +14,6 @@ libraryDependencies ++= Seq(
   "org.http4s"      %% "http4s-dsl"          % Http4sVersion,
   "io.circe"        %% "circe-generic"       % CirceVersion,
   "com.softwaremill.sttp.client3" %% "core" % "3.8.15",
-  "com.softwaremill.sttp.client3" %% "circe" % "3.8.15"
+  "com.softwaremill.sttp.client3" %% "circe" % "3.8.15",
+  "org.scalatest" %% "scalatest" % "3.2.15" % Test
 )
