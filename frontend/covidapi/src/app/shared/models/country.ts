@@ -1,3 +1,6 @@
+/**
+ * Represents country entity.
+ */
 export class Country{
     country: string;
     code: string;
